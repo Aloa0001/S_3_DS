@@ -243,52 +243,6 @@ public class BinaryMinHeap<E> {
         preOrderTraversal(2 * index + 2);
     }
 
-    public static int findHeight(int nodes) {
-        if (nodes == 1) {
-            return nodes - 1;
-        }
-        int count = 1;
-        int level = 1;
-        while (count <= nodes) {
-            count = count + (int) Math.pow(2, level);
-            level++;
-        }
-        return level - 1;
-    }
-
-    public static int findLevel(int node) {
-        if (node == 0) {
-            return 0;
-        }
-        int count = 1;
-        int level = 1;
-        while (count <= node) {
-            count = count + (int) Math.pow(2, level);
-            level++;
-        }
-        return level - 1;
-    }
-
-    public static int[] returnMinNode(int levels) {
-        int[] minNodes = new int[levels + 1];
-        int level = 0;
-        while (level <= levels) {
-            minNodes[level] = (int) Math.pow(2, level) - 1;
-            level++;
-        }
-        return minNodes;
-    }
-
-    public static int[] returnMaxNode(int levels) {
-        int[] maxNodes = new int[levels + 1];
-        int level = 0;
-        while (level <= levels) {
-            maxNodes[level] = (int) Math.pow(2, level + 1) - 2;
-            level++;
-        }
-        return maxNodes;
-    }
-
     public static void main(String[] args) {
         MyTimer timer = new MyTimer();
         int[] arr1000000 = new int[1000000];
@@ -390,9 +344,6 @@ public class BinaryMinHeap<E> {
 
         System.out.println("\nSem example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
         System.out.println("Sem example linear-time minHeap " + Arrays.toString(linearTime.array));
-        System.out.println("\nleftest node for each level in a heap of 1035 nodes is " + Arrays.toString(returnMinNode(findHeight(1035))));
-        System.out.println("rightest node for each level in a heap of 1035 nodes is " + Arrays.toString(returnMaxNode(findHeight(1035))));
-        System.out.println("level for node 756 is " + (findLevel(756)));
         System.out.println("After removing: ");
         System.out.println("remove root from linear: "+linearTime.remove());
         System.out.println("Sem example linear-time minHeap " + Arrays.toString(linearTime.array));
