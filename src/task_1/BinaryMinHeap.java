@@ -46,6 +46,7 @@ public class BinaryMinHeap<E> {
         System.arraycopy(arr, 0, array, 0, arr.length);
         // from last parent down, check/ establish minHeap
         setMinHeap();
+        lastPosition = arr.length;
         array = Arrays.copyOf(array, array.length * 5 / 2); // give space for null leaves to be used in traversals
     }
 
@@ -115,6 +116,51 @@ public class BinaryMinHeap<E> {
             swap(position, parent);
             minHeapify(parent);
         }
+    }
+    /**
+     * remove root, bring last as root,
+     * and trickle down picking smallest between children
+     */
+    private E remove(){
+        E tmp = array[0];
+        swap(0,--lastPosition);
+        array[lastPosition] = null;
+        trickleDown(0);
+        array = Arrays.copyOfRange(array,0,array.length);
+        return tmp;
+    }
+    /**
+     * starting with the given index, compare children
+     * and swap smallest with parent recursively
+     * as long parent is bigger
+     * */
+    public void trickleDown(int parent){
+        int leftChild = 2*parent+1;
+        int rightChild = 2*parent +2;
+        int smallest;
+        // pick smallest of the two children
+        if (array[leftChild] == null && array[rightChild] != null){
+            // if only left available case
+            smallest = rightChild;
+        }else if (array[rightChild] == null && array[leftChild] != null) {
+            // if only right available case
+            smallest = leftChild;
+        }else if (array[leftChild] == null && array[rightChild] == null){
+            // leaves level
+            return;
+        }else if ((((Comparable<E>)array[leftChild]).compareTo(array[rightChild]) < 0)){
+            smallest = leftChild;
+        }else{
+            smallest = rightChild;
+        }
+        // if the parent is smaller than the smallest child, stop
+        if ((((Comparable<E>)array[parent]).compareTo(array[smallest]) < 0)) {
+            return;
+        }
+        // if the parent is bigger than the smallest child, swap
+        swap(parent, smallest);
+        // recursive call on the new index of the initial value
+        trickleDown(smallest);
     }
     /**
      * read the heap in the array order
@@ -253,8 +299,6 @@ public class BinaryMinHeap<E> {
         Integer[] arR1000 = new Integer[1000];
         Integer[] arR10000 = new Integer[10000];
 
-
-
         try {
             arr1000000 = Files.lines(Paths.get("src/Numbers.txt")).mapToInt(Integer::parseInt).toArray();
         } catch (IOException e) {
@@ -349,5 +393,38 @@ public class BinaryMinHeap<E> {
         System.out.println("\nleftest node for each level in a heap of 1035 nodes is " + Arrays.toString(returnMinNode(findHeight(1035))));
         System.out.println("rightest node for each level in a heap of 1035 nodes is " + Arrays.toString(returnMaxNode(findHeight(1035))));
         System.out.println("level for node 756 is " + (findLevel(756)));
+        System.out.println("After removing: ");
+        System.out.println("remove root from linear: "+linearTime.remove());
+        System.out.println("Sem example linear-time minHeap " + Arrays.toString(linearTime.array));
+        System.out.println("remove root from insertion heap: "+insertMinHeap.remove());
+        System.out.println("Sem example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
+
+        timer.startTimer();
+        for (int i = 0; i < 10; i++){
+            linearTime100.remove();
+        }
+        timer.stopTimer();
+        System.out.println("Average Linear time removing "+timer.getTime());
+
+        timer.startTimer();
+        for (int i = 0; i < 10; i++){
+            insertMinHeap100.remove();
+        }
+        timer.stopTimer();
+        System.out.println("Average insertion time removing "+timer.getTime());
+
+        timer.startTimer();
+        for (int x: arr){
+            linearTime100.insert(x);
+        }
+        timer.stopTimer();
+        System.out.println("Average Linear time inserting "+timer.getTime());
+
+        timer.startTimer();
+        for (int x: arr){
+            insertMinHeap100.insert(x);
+        }
+        timer.stopTimer();
+        System.out.println("Average Insertion time inserting "+timer.getTime());
     }
 }
