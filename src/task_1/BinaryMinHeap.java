@@ -1,5 +1,10 @@
 package task_1;
 
+import utilities.MyTimer;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 
 public class BinaryMinHeap<E> {
@@ -238,9 +243,81 @@ public class BinaryMinHeap<E> {
     }
 
     public static void main(String[] args) {
+        MyTimer timer = new MyTimer();
+        int[] arr1000000 = new int[1000000];
+        int[] arr10000;
+        int[] arr1000;
+        int[] arr100;
+        Integer[] arR100 = new Integer[100];
+        Integer[] arR1000 = new Integer[1000];
+        Integer[] arR10000 = new Integer[10000];
+
+
+
+        try {
+            arr1000000 = Files.lines(Paths.get("src/Numbers.txt")).mapToInt(Integer::parseInt).toArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        arr10000 = Arrays.copyOf(arr1000000, 10000);
+        arr1000 = Arrays.copyOf(arr1000000, 1000);
+        arr100 = Arrays.copyOf(arr1000000, 100);
+
+        for (int i = 0; i < 100; i++){
+            arR100[i] = arr1000000[i];
+        }
+        for (int i = 0; i < 1000; i++){
+            arR1000[i] = arr1000000[i];
+        }
+        for (int i = 0; i < 10000; i++){
+            arR10000[i] = arr1000000[i];
+        }
+
         BinaryMinHeap<Integer> insertMinHeap = new BinaryMinHeap<>();
+        BinaryMinHeap<Integer> insertMinHeap100 = new BinaryMinHeap<>();
+        BinaryMinHeap<Integer> insertMinHeap1000 = new BinaryMinHeap<>();
+        BinaryMinHeap<Integer> insertMinHeap10000 = new BinaryMinHeap<>();
+        BinaryMinHeap<Integer> linearTime100 = new BinaryMinHeap<>(100);
+        BinaryMinHeap<Integer> linearTime1000 = new BinaryMinHeap<>(1000);
+        BinaryMinHeap<Integer> linearTime10000 = new BinaryMinHeap<>(10000);
         Integer[] arr = {10, 12, 1, 14, 6, 5, 8, 15, 3, 9, 7, 4, 11, 13, 2};
         BinaryMinHeap<Integer> linearTime = new BinaryMinHeap<>(arr.length);
+        timer.startTimer();
+        for (int x : arr100) {
+            insertMinHeap100.insert(x);
+        }
+        /**test insert***************************************************/
+        timer.stopTimer();
+        System.out.println("Time for inserting 100 is: "+timer.getTime());
+        timer.startTimer();
+        for (int x : arr1000) {
+            insertMinHeap1000.insert(x);
+        }
+        timer.stopTimer();
+        System.out.println("Time for inserting 1000 is: "+timer.getTime());
+        timer.startTimer();
+        for (int x : arr10000) {
+            insertMinHeap10000.insert(x);
+        }
+        timer.stopTimer();
+        System.out.println("Time for inserting 10000 is: "+timer.getTime());
+        /*****************************************************************/
+
+        /** test add linear-time******************************************/
+        timer.startTimer();
+        linearTime100.addMinHeap(arR100);
+        timer.stopTimer();
+        System.out.println("Time for linear-time 100 is: "+timer.getTime());
+        timer.startTimer();
+        linearTime1000.addMinHeap(arR1000);
+        timer.stopTimer();
+        System.out.println("Time for linear-time1000 is: "+timer.getTime());
+        timer.startTimer();
+        linearTime10000.addMinHeap(arR10000);
+        timer.stopTimer();
+        System.out.println("Time for linear-time 10000 is: "+timer.getTime());
+        /******************************************************************/
+
         for (int x : arr) {
             insertMinHeap.insert(x);
         }
