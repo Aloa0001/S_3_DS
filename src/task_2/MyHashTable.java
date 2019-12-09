@@ -27,16 +27,15 @@ public class MyHashTable {
      * LINEAR PROBING IMPLEMENTATION
      */
     public void addLinear(int value) {
-        System.out.println(loadFactor());
         if (loadFactor() > maxLoadFactor) {
-            resize(array.length * 2);
+            resize();
         }
         int i = 0;
         int index = hashFunctionLinear(value, i);
         while (array[index] != 0) {
             index = hashFunctionLinear(value, ++i);
             if (i > 3) {
-                resize(array.length * 2);
+                resize();
             }
         }
         array[index] = value;
@@ -47,7 +46,7 @@ public class MyHashTable {
         return (key + collisionResolutionLinearPolicy(i)) % 10;
     }
 
-    public void resize(int newSize) {
+    public void resize() {
         int[] arr = Arrays.copyOf(array, array.length);
         array = Arrays.copyOf(array, array.length * 2);
         Arrays.fill(array, 0);
@@ -56,13 +55,13 @@ public class MyHashTable {
 
     public void reHash(int[] arr) {
         System.out.println(Arrays.toString(arr));
-        for (int i = 0; i < arr.length; i++) {
+        for (int value : arr) {
             int j = 0;
-            int newIndex = hashFunctionLinear(arr[i], j);
-            while (array[newIndex] != 0){
-                newIndex = hashFunctionLinear(arr[i], ++j);
+            int newIndex = hashFunctionLinear(value, j);
+            while (array[newIndex] != 0) {
+                newIndex = hashFunctionLinear(value, ++j);
             }
-            array[newIndex] = arr[i];
+            array[newIndex] = value;
         }
     }
     /*******************************************/
@@ -71,28 +70,27 @@ public class MyHashTable {
     /**
      * QUADRATIC PROBING IMPLEMENTATION
      */
-    public boolean addQuadratic(int value) {
+    public void addQuadratic(int value) {
         if (loadFactor() > maxLoadFactor) {
-            resizeQuadratic(array.length * 2);
+            resizeQuadratic();
         }
         int i = 0;
         int index = hashFunctionQuadratic(value, i);
         while (array[index] != 0) {
             index = hashFunctionQuadratic(value, ++i);
             if (i > 3) {
-                resizeQuadratic(array.length * 2);
+                resizeQuadratic();
             }
         }
         array[index] = value;
         numberOfElements++;
-        return true;
     }
 
     public int hashFunctionQuadratic(int key, int i) {
         return (key + collisionResolutionQuadraticPolicy(i)) % 10;
     }
 
-    public void resizeQuadratic(int newSize) {
+    public void resizeQuadratic() {
         int[] arr = Arrays.copyOf(array,array.length+1);
         array = Arrays.copyOf(array, array.length * 2);
         Arrays.fill(array, 0);
@@ -100,13 +98,13 @@ public class MyHashTable {
     }
 
     public void reHashQuadratic(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
+        for (int value : arr) {
             int j = 0;
-            int newIndex = hashFunctionQuadratic(arr[i], j);
-            while (array[newIndex] != 0){
-                newIndex = hashFunctionLinear(arr[i], ++j);
+            int newIndex = hashFunctionQuadratic(value, j);
+            while (array[newIndex] != 0) {
+                newIndex = hashFunctionLinear(value, ++j);
             }
-            array[newIndex] = arr[i];
+            array[newIndex] = value;
         }
     }
     /*******************************************/
@@ -114,27 +112,26 @@ public class MyHashTable {
     /**
      * FUNCTION 2 LINEAR IMPLEMENTATION
      */
-    public boolean addLinearH2(int value) {
+    public void addLinearH2(int value) {
         if (loadFactor() > maxLoadFactor) {
-            resizeH2(array.length * 2);
+            resizeH2();
         }
         int i = 0;
         int index = hashF2Linear(value, i);
         while (array[index] != 0) {
             index = hashF2Linear(value, ++i);
             if (i > 3) {
-                resizeH2(array.length * 2);
+                resizeH2();
             }
         }
         array[index] = value;
         numberOfElements++;
-        return true;
     }
 
     public int hashF2Linear(int key, int i) {
         return 7 - (key + collisionResolutionLinearPolicy(i)) % 7;
     }
-    public void resizeH2(int newSize) {
+    public void resizeH2() {
         int[] arr = Arrays.copyOf(array, array.length);
         array = Arrays.copyOf(array, array.length * 2);
         Arrays.fill(array, 0);
@@ -142,13 +139,13 @@ public class MyHashTable {
     }
 
     public void reHashH2(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
+        for (int value : arr) {
             int j = 0;
-            int newIndex = hashF2Linear(arr[i], j);
-            while (array[newIndex] != 0){
-                newIndex = hashFunctionLinear(arr[i], ++j);
+            int newIndex = hashF2Linear(value, j);
+            while (array[newIndex] != 0) {
+                newIndex = hashFunctionLinear(value, ++j);
             }
-            array[newIndex] = arr[i];
+            array[newIndex] = value;
         }
     }
     /********************************************/
@@ -156,27 +153,26 @@ public class MyHashTable {
     /**
      * FUNCTION 2 QUADRATIC IMPLEMENTATION
      */
-    public boolean addQuadraticH2(int value) {
+    public void addQuadraticH2(int value) {
         if (loadFactor() > maxLoadFactor) {
-            resizeQuadratic(array.length * 2);
+            resizeQuadratic();
         }
         int i = 0;
         int index = hashF2Quadratic(value, i);
         while (array[index] != 0) {
             index = hashF2Quadratic(value, ++i);
             if (i > 3) {
-                resizeQuadraticH2(array.length * 2);
+                resizeQuadraticH2();
             }
         }
         array[index] = value;
         numberOfElements++;
-        return true;
     }
 
     public int hashF2Quadratic(int key, int i) {
         return 7 - (key + collisionResolutionQuadraticPolicy(i)) % 7;
     }
-    public void resizeQuadraticH2(int newSize) {
+    public void resizeQuadraticH2() {
         int[] arr = Arrays.copyOf(array, array.length);
         array = Arrays.copyOf(array, array.length * 2);
         Arrays.fill(array, 0);
@@ -184,13 +180,13 @@ public class MyHashTable {
     }
 
     public void reHashQuadraticH2(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
+        for (int value : arr) {
             int j = 0;
-            int newIndex = hashF2Quadratic(arr[i], j);
-            while (array[newIndex] != 0){
-                newIndex = hashFunctionLinear(arr[i], ++j);
+            int newIndex = hashF2Quadratic(value, j);
+            while (array[newIndex] != 0) {
+                newIndex = hashFunctionLinear(value, ++j);
             }
-            array[newIndex] = arr[i];
+            array[newIndex] = value;
         }
     }
     /********************************************/
@@ -232,30 +228,15 @@ public class MyHashTable {
             f2Rehash.addLinearH2(x);
         }
 
-        /** LINEAR PROBING */
-        System.out.println("LINEAR PROBING for :  "
-                + Arrays.toString(arr));
-        System.out.println(Arrays.toString(hashLinearProbing.array));
-
-        /** QUADRATIC PROBING */
-        System.out.println("\nQUADRATIC PROBING for :  "
-                + Arrays.toString(arr));
-        System.out.println(Arrays.toString(hashQuadraticProbing.array));
-
-        /** F2 ___ LINEAR PROBING */
-        System.out.println("\nF2 ___ LINEAR PROBING for :  "
-                + Arrays.toString(arr));
-        System.out.println(Arrays.toString(hashLinearProbingF2.array));
-
-        /** F2 ___after resized to double and re-hashing*/
-        System.out.println("\nF2___ after resized to double and rehashing :\n"
+        /** TEST TASK 2 */
+        System.out.println("\nTEST FOR INITIAL INPUT :  " + Arrays.toString(arr));
+        System.out.println("\nLINEAR PROBING hashFunction1 :  "+Arrays.toString(hashLinearProbing.array));
+        System.out.println("\nQUADRATIC PROBING hashFunction1 :  "+Arrays.toString(hashQuadraticProbing.array));
+        System.out.println("\nLINEAR PROBING hashFunction2 :  "+Arrays.toString(hashLinearProbingF2.array));
+        System.out.println("\nHashFunction2___ after resized to double size and rehashed :\n"
                 +Arrays.toString(f2Rehash.array)+
                 "\nThe resize+rehash method was triggered by the load_factor set " +
                 "to 0.5, which was pass with the 6th element  ");
-
-        /** F2 ___ LINEAR PROBING */
-        System.out.println("\nF2 ___ QUADRATIC PROBING for :  "
-                + Arrays.toString(arr));
-        System.out.println(Arrays.toString(hashQuadraticProbingF2.array));
+        System.out.println("\nQUADRATIC PROBING hashFunction2  "+Arrays.toString(hashQuadraticProbingF2.array));
     }
 }
