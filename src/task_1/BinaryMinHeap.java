@@ -121,7 +121,8 @@ public class BinaryMinHeap<E> {
      * */
     private void linearTime() {
         for (E e : array) {
-            System.out.print(e + ", ");
+            if (e != null)
+                System.out.print(e + ", ");
         }
         System.out.println(); // jump to next line
     }
@@ -323,30 +324,30 @@ public class BinaryMinHeap<E> {
         }
         linearTime.addMinHeap(arr);
 
-        System.out.println("In order: ");
+        System.out.println("\nIn order: ");
         insertMinHeap.inOrder();
         System.out.println();
         linearTime.inOrder();
 
-        System.out.println("Pre-Order Traversal: ");
+        System.out.println("\nPre-Order Traversal: ");
         insertMinHeap.preOrder();
         System.out.println();
         linearTime.preOrder();
 
-        System.out.println("Post-Order Traversal: ");
+        System.out.println("\nPost-Order Traversal: ");
         insertMinHeap.postOrder();
         System.out.println();
         linearTime.postOrder();
 
-        System.out.println("Linear-Time Traversal: ");
+        System.out.println("\nLinear-Time Traversal: ");
         insertMinHeap.linearTime();
         System.out.println();
         linearTime.linearTime();
 
-        System.out.println("\nInsertion minHeap   " + Arrays.toString(insertMinHeap.array));
-        System.out.println("linear-time minHeap " + Arrays.toString(linearTime.array));
-        System.out.println("Height for 33 nodes heap is " + Arrays.toString(returnMinNode(findHeight(1023))));
-        System.out.println("Height for 33 nodes heap is " + Arrays.toString(returnMaxNode(findHeight(1023))));
-        System.out.println("level for 4 node is " + (findLevel(2)));
+        System.out.println("\nSem example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
+        System.out.println("Sem example linear-time minHeap " + Arrays.toString(linearTime.array));
+        System.out.println("\nleftest node for each level in a heap of 1035 nodes is " + Arrays.toString(returnMinNode(findHeight(1035))));
+        System.out.println("rightest node for each level in a heap of 1035 nodes is " + Arrays.toString(returnMaxNode(findHeight(1035))));
+        System.out.println("level for node 756 is " + (findLevel(756)));
     }
 }
