@@ -1,102 +1,77 @@
 package task_2;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
-public class HashTable <K,V>{
-    /**global variables*/
-    LinkedList<HashElement<K,V>>[] hash_array;
 
-    private int numElements, tableSize;
+public class HashTable {
+
+    private LinkedList<Integer>[] hash_array;
+    private int numElements;
+    private int tableSize;
     private double maxLoadFactor;
+    double indexCounter;
 
     public HashTable() {
         this.tableSize = 10;
         maxLoadFactor = 0.75;
         numElements = 0;
-
-        hash_array = (LinkedList<HashElement<K,V>> []) new LinkedList[tableSize];
-
+        indexCounter = 0;
+        hash_array = (LinkedList<Integer> []) new LinkedList[tableSize];
         for(int i = 0 ; i < tableSize; i++){
-            hash_array[i] = new LinkedList<HashElement<K,V>>();
+            hash_array[i] = new LinkedList<>();
         }
     }
     /**
      * Hash constructor
-     * @param tableSize
+     * @param size .
      */
-    public HashTable(int tableSize){
-        this.tableSize = tableSize;
-
+    public HashTable(int size){
+        this.tableSize = size;
         maxLoadFactor = 0.75;
         numElements = 0;
-
-        hash_array = (LinkedList<HashElement<K,V>> []) new LinkedList[tableSize];
-
-        for(int i = 0 ; i < tableSize; i++){
-            hash_array[i] = new LinkedList<HashElement<K,V>>();
+        indexCounter = 0;
+        hash_array = (LinkedList<Integer> []) new LinkedList[size];
+        for(int i = 0 ; i < size; i++){
+            hash_array[i] = new LinkedList<>();
         }
     }
 
-    /**
-     * inner class HashElement
-     * @param <K>
-     * @param <V>
-     */
-    class HashElement<K,V> implements Comparable<HashElement<K,V>>{
-
-        K key;
-        V value;
-
-        public HashElement(K key,V value){
-            this.key = key;
-            this.value = value;
-        }
-
-        public int compareTo(HashElement<K,V> o){
-            return ((Comparable<K>)o.key).compareTo(this.key);
-        }
-
-    }
-    public boolean add(K key, V value){
+    public void add(int value){
         if (loadFactor() > maxLoadFactor) {
-            resize(tableSize*2);
+            resize();
         }
-        HashElement<K,V> he = new HashElement(key,value);
-        int hashVal = key.hashCode();
-        hashVal = hashVal & 0x7FFFFFFF % tableSize;
-        hash_array[hashVal].addFirst(he);
+        int i = 0;
+        int hashVal = value%10 + i;
+        hash_array[hashVal].addLast(value);
+        if (hash_array[hashVal] == null){
+            indexCounter++;
+        }
         numElements++;
-        return true;
     }
 
-    public boolean remove(K key, V value){
-
-        HashElement<K,V> he = new HashElement(key,value);
-
-        int hashVal = key.hashCode();
-        hashVal = hashVal & 0x7FFFFFFF % tableSize;
-        hash_array[hashVal].remove(he);
-        numElements--;
-        return true;
-    }
-
-    public void resize(int newSize){
-        LinkedList<HashElement<K,V>> [] newArray = (LinkedList<HashElement<K,V>> [])new LinkedList[newSize];
-
-        for(int i = 0 ; i < newSize ; i ++){
-            newArray[i] = new LinkedList<HashElement<K,V>>();
+    public void resize(){
+        LinkedList<Integer> [] newArray = (LinkedList<Integer> [])new LinkedList[hash_array.length*2];
+        for(int i = 0 ; i < hash_array.length*2 ; i ++){
+            newArray[i] = new LinkedList<>();
         }
-        /*for(K key : this){
-            V value = getValue(key);
-            HashElement<K,V> he = new HashElement<K,V>(key, value);
-            int hashVal = (key.hashCode() & 0x7FFFFFFF)% newSize;
-            newArray[hashVal].addFirst(he);
-        }*/
+
         hash_array = newArray;
-        tableSize = newSize;
+        tableSize = hash_array.length;
     }
+
 
     public double loadFactor(){
-        return numElements / tableSize;
+        return indexCounter / tableSize;
+    }
+
+    public static void main(String[] args) {
+        HashTable hash = new HashTable();
+        int[] arr = {4371, 1323, 6173, 4199, 4344, 9679, 1989};
+        for (int x : arr) {
+            hash.add(x);
+        }
+        System.out.println("Input : "+"  "+ Arrays.toString(arr));
+        System.out.println("Separate chaining : "+"  "+ Arrays.toString(hash.hash_array));
     }
 }
