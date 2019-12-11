@@ -4,23 +4,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 /**
  * Alex
  */
 public class WordPuzzle {
-
-    private SecureRandom rand = new SecureRandom();
-
-    private ArrayList<String> found = new ArrayList<>();
-    private ArrayList<String> answers = new ArrayList<>();
-    private String[] display;
-    private String[][] wordPuzzle;
     private int rows;
     private int columns;
-    private ArrayList words = new ArrayList(); // stores the db
-    String[] alphabet = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+    // provides random indexes for filling the map
+    private SecureRandom rand = new SecureRandom();
+    // supports all possible combinations of the map
+    private ArrayList<String> found = new ArrayList<>();
+    // supports the right answers
+    private ArrayList<String> answers = new ArrayList<>();
+    // used for calculation
+    private String[] display;
+    // supports the random puzzle map
+    private String[][] wordPuzzle;
+    // read the words.txt
+    private HashSet<String> words = new HashSet<>();
+    // alphabet
+    private String[] alphabet = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "a", "s", "d", "f", "g", "h", "j", "k",
             "l", "z", "x", "c", "v", "b", "n", "m"};
 
