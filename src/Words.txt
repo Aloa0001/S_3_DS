@@ -134,6 +134,7 @@ amount
 amuse
 amused
 amusing
+an
 analyse
 analysis
 ancient
@@ -1395,6 +1396,7 @@ gold
 good
 goodbye
 goods
+got
 govern
 government
 governor
@@ -1820,6 +1822,7 @@ location
 lock
 logic
 logical
+logo
 lonely
 long
 look
@@ -2058,7 +2061,6 @@ noisy
 non
 none
 nonsense
-no one
 nor
 normal
 normally
@@ -2112,6 +2114,7 @@ often
 oh
 oil
 OK
+ok
 old
 on
 once
