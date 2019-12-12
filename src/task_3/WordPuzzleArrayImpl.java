@@ -3,27 +3,27 @@ package task_3;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.SecureRandom;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Scanner;
 
-/**
- * Alex
- */
-public class WordPuzzle {
+public class WordPuzzleArrayImpl {
     private int rows;
     private int columns;
     // provides random indexes for filling the map
     private SecureRandom rand = new SecureRandom();
     // supports all possible combinations of the map
-    private HashMap<String,String> found = new HashMap<>();
+    //private HashMap<String,String> found = new HashMap<>();
+    private ArrayList<String> found = new ArrayList<>();
     // supports the right answers
-    private HashMap<String,String> answers = new HashMap<>();
+    private ArrayList<String> answers = new ArrayList<>();
     // used for calculation
     private String[] display;
     // supports the random puzzle map
     private String[][] wordPuzzle;
     // read the words.txt
-    /** private HashSet<String> words = new HashSet<>();*/
-    private Hashtable<String,String> words = new Hashtable<>();
+    private ArrayList<String> words = new ArrayList<>();
     // alphabet
     private String[] alphabet = {"q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
             "a", "s", "d", "f", "g", "h", "j", "k",
@@ -36,7 +36,7 @@ public class WordPuzzle {
      * @param edge the number of rows = columns
      * @throws FileNotFoundException read the Words.txt file
      */
-    public WordPuzzle(int edge) throws FileNotFoundException {
+    public WordPuzzleArrayImpl(int edge) throws FileNotFoundException {
         this.rows = edge;
         this.columns = edge;
         wordPuzzle = new String[rows][columns];
@@ -71,7 +71,7 @@ public class WordPuzzle {
         while (input.hasNext()) {
             String word = input.next();
             if (word.length() < rows) {
-                words.put(word,word);
+                words.add(word);
                 count++;
             }
         }
@@ -101,8 +101,8 @@ public class WordPuzzle {
         while (count >= 0) {
             next = count;
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count -= rows;
         }
@@ -110,8 +110,8 @@ public class WordPuzzle {
         // go from top back to position
         while (next <= position) {
             word = word + display[next];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             next += rows;
         }
@@ -120,8 +120,8 @@ public class WordPuzzle {
         //go from position to the bottom of the column
         while (next < display.length) {
             word = word + display[next];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             next += rows;
         }
@@ -130,8 +130,8 @@ public class WordPuzzle {
         // go from the bottom back to position
         while (next >= position) {
             word = word + display[next];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             next-= rows;
         }
@@ -148,18 +148,18 @@ public class WordPuzzle {
         //go from the beginning of the row to position
         while (count <= position) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count++;
         }
         word = "";
         next = position;
-         // go from position to the beginning of the row
+        // go from position to the beginning of the row
         while (next > position - position % rows) {
             word = word + display[next];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             next--;
         }
@@ -168,8 +168,8 @@ public class WordPuzzle {
         //go from position to the end of the row
         while (next < length) {
             word = word + display[next];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             next++;
         }
@@ -178,8 +178,8 @@ public class WordPuzzle {
         // go from the end of the row back to position
         while (next > position) {
             word = word + display[next];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             next--;
         }
@@ -195,8 +195,8 @@ public class WordPuzzle {
         // go up left corner
         while (next >= 0 && count >= 0) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count -= (rows + 1);
             next--;
@@ -206,8 +206,8 @@ public class WordPuzzle {
         // go back to position from left up corner
         while (count <= position) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count += (rows + 1);
         }
@@ -217,8 +217,8 @@ public class WordPuzzle {
         // go from position to right down corner
         while (next > 0 && count < display.length) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count += (rows + 1);
             next--;
@@ -229,8 +229,8 @@ public class WordPuzzle {
         // go from down right corner to position
         while (next >= 0 && count > 0) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count -= (rows + 1);
             next--;
@@ -247,8 +247,8 @@ public class WordPuzzle {
         // got from position to  right up corner
         while (next > 0 && count > 0) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count -= (rows - 1);
             next--;
@@ -259,8 +259,8 @@ public class WordPuzzle {
         // go from right up corner to position
         while (next > 0 && count <= position) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count += (rows - 1);
             next--;
@@ -271,8 +271,8 @@ public class WordPuzzle {
         // go from position to left down corner
         while (next > 0 && count < display.length) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count += (rows - 1);
             next--;
@@ -283,8 +283,8 @@ public class WordPuzzle {
         // go from down left corner to position
         while (next > 0 && count < display.length) {
             word = word + display[count];
-            if (!found.containsKey(word)) {
-                found.put(word,word);
+            if (!found.contains(word)) {
+                found.add(word);
             }
             count -= (rows - 1);
             next--;
@@ -295,9 +295,9 @@ public class WordPuzzle {
      * and select the answer
      */
     private void fillAnswers(){
-        for (String x : found.keySet()) {
+        for (String x : found) {
             if (words.contains(x)) {
-                answers.put(x,x);
+                answers.add(x);
             }
         }
     }
@@ -306,7 +306,7 @@ public class WordPuzzle {
         boolean integer;
         String word;
         do {
-           HashMap<String,String> answer = new HashMap<>();
+            ArrayList<String> answer = new ArrayList<>();
             int edge = 0;
             Scanner in = new Scanner(System.in);
             do {
@@ -320,7 +320,7 @@ public class WordPuzzle {
                     integer = true;
                 }
             } while (integer);
-            WordPuzzle wp = new WordPuzzle(edge);
+            WordPuzzleArrayImpl wp = new WordPuzzleArrayImpl(edge);
             for (int i = 0; i < edge; i++) {
                 for (int j = 0; j < edge; j++) {
                     System.out.print(wp.wordPuzzle[i][j] + "  ");
@@ -332,10 +332,10 @@ public class WordPuzzle {
             word = "";
             while (!word.equals("y")) {
                 word = in.nextLine();
-                answer.put(word,word);
+                answer.add(word);
             }
-            for (String x : answer.keySet()) {
-                if (wp.answers.containsKey(x)) {
+            for (String x : answer) {
+                if (wp.answers.contains(x)) {
                     System.out.println("You found " + x + " !");
                     wp.answers.remove(x);
                 }
