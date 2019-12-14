@@ -58,11 +58,12 @@ public class TestMain {
     }
 
     private static void chooseTestResultsOrPlay() throws FileNotFoundException {
+        System.out.println("WORD PUZZLE");
         String[] answers = {"1", "2", "5"};
         String answer;
         boolean condition = false;
         do {
-            System.out.println("\u001B[31m" + "Please enter the task you want to test: \npress 1 to play" +
+            System.out.println("\u001B[31m" + "Please enter the task you want to test: \npress 1 to play WORD PUZZLE" +
                     "\npress 2 to see tests results\n\npress 5 to exit" + "\u001B[0m");
             answer = in.nextLine();
             for (String x : answers) {
@@ -73,7 +74,8 @@ public class TestMain {
             }
         } while (!condition);
         if (answer.equals("1")) {
-            //test task
+            //play
+            System.out.println("WORD PUZZLE");
             WordPuzzleArrayImpl.main(null);
         }
         if (answer.equals("2")) {
