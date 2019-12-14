@@ -1,5 +1,7 @@
 package task_3;
 
+import testTasks.TestMain;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.SecureRandom;
@@ -348,5 +350,7 @@ public class WordPuzzleArrayImpl {
             System.out.println("\nif you want to continue enter \"y\", \nelse enter anything else to quit ");
             word = in.nextLine();
         }while(word.equals("y"));
+        System.out.println();
+        TestMain.main(null);
     }
 }

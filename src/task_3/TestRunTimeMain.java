@@ -1,5 +1,6 @@
 package task_3;
 
+import testTasks.TestMain;
 import utilities.MyTimer;
 
 import java.io.FileNotFoundException;
@@ -9,6 +10,7 @@ public class TestRunTimeMain {
     public static void main(String[] args) throws FileNotFoundException{
         int[] sizes = {5,10,20,40};
         runTest(1,sizes);
+        TestMain.main(null);
     }
     private static void runHash(int iterations, int sizeOfPuzzle) throws FileNotFoundException {
         MyTimer timer = new MyTimer();

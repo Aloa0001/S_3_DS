@@ -341,7 +341,7 @@ public class WordPuzzle {
                 }
             }
             if (wp.answers.size() > 0) {
-                System.out.println("\nSadly, you lost!!! \nyou missed : " + wp.answers);
+                System.out.println("\nSadly, you lost!!! \nyou missed : " + wp.answers.keySet());
             } else {
                 System.out.println(" Congratulations !!! \nYou WON THE GAME !!!");
             }

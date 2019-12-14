@@ -1,11 +1,15 @@
 package task_1;
 
+import testTasks.TestMain;
 import utilities.MyTimer;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLOutput;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class BinaryMinHeap<E> {
 
@@ -243,7 +247,8 @@ public class BinaryMinHeap<E> {
         preOrderTraversal(2 * index + 2);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
         MyTimer timer = new MyTimer();
         int[] arr1000000 = new int[1000000];
         int[] arr10000;
@@ -281,28 +286,32 @@ public class BinaryMinHeap<E> {
         BinaryMinHeap<Integer> linearTime10000 = new BinaryMinHeap<>(10000);
         Integer[] arr = {10, 12, 1, 14, 6, 5, 8, 15, 3, 9, 7, 4, 11, 13, 2};
         BinaryMinHeap<Integer> linearTime = new BinaryMinHeap<>(arr.length);
+
+        /**test insert***************************************************/
         timer.startTimer();
         for (int x : arr100) {
             insertMinHeap100.insert(x);
         }
-        /**test insert***************************************************/
+        System.out.println("\n\nTask 1d.  RUNTIME FOR INSERTION");
         timer.stopTimer();
-        System.out.println("Time for inserting 100 is: "+timer.getTime());
+        System.out.println("RunTime using insertion for 100 is: "+timer.getTime());
         timer.startTimer();
         for (int x : arr1000) {
             insertMinHeap1000.insert(x);
         }
         timer.stopTimer();
-        System.out.println("Time for inserting 1000 is: "+timer.getTime());
+        System.out.println("RunTime using insertion for 1000 is: "+timer.getTime());
         timer.startTimer();
         for (int x : arr10000) {
             insertMinHeap10000.insert(x);
         }
         timer.stopTimer();
-        System.out.println("Time for inserting 10000 is: "+timer.getTime());
+        System.out.println("RunTime using insertion for 10000 is: "+timer.getTime());
         /*****************************************************************/
 
         /** test add linear-time******************************************/
+        System.out.println("\n\n1d.  RUNTIME FOR LINEAR-TIME ");
+
         timer.startTimer();
         linearTime100.addMinHeap(arR100);
         timer.stopTimer();
@@ -321,34 +330,44 @@ public class BinaryMinHeap<E> {
             insertMinHeap.insert(x);
         }
         linearTime.addMinHeap(arr);
-
-        System.out.println("\nIn order: ");
+        System.out.println("\n\nTask 1c. TRAVERSING THE TREES:  ");
+        System.out.println("\nIn-Order Traversal, insertionMinHeap: ");
         insertMinHeap.inOrder();
-        System.out.println();
+        System.out.println("\nIn-Order Traversal, linear-time minHeap: ");
         linearTime.inOrder();
 
-        System.out.println("\nPre-Order Traversal: ");
+        System.out.println("\nPre-Order Traversal, insertionMinHeap: ");
         insertMinHeap.preOrder();
-        System.out.println();
+        System.out.println("\nPre-Order Traversal, linear-time minHeap: ");
         linearTime.preOrder();
 
-        System.out.println("\nPost-Order Traversal: ");
+        System.out.println("\nPost-Order Traversal, insertionMinHeap: ");
         insertMinHeap.postOrder();
-        System.out.println();
+        System.out.println("\nPost-Order Traversal, linear-time minHeap: ");
         linearTime.postOrder();
 
-        System.out.println("\nLinear-Time Traversal: ");
+        System.out.println("\nLinear-Time Traversal, insertionMinHeap: ");
         insertMinHeap.linearTime();
-        System.out.println();
+        System.out.println("\nLinear-Time Traversal, linear-time minHeap: ");
         linearTime.linearTime();
 
-        System.out.println("\nSem example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
-        System.out.println("Sem example linear-time minHeap " + Arrays.toString(linearTime.array));
+        /**  1 A,B,E*/
+        System.out.println("\n\nTask 1 a, b, e, :");
+        System.out.println("\nSeminar example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
+        System.out.println("Seminar example linear-time minHeap " + Arrays.toString(linearTime.array));
         System.out.println("After removing: ");
-        System.out.println("remove root from linear: "+linearTime.remove());
-        System.out.println("Sem example linear-time minHeap " + Arrays.toString(linearTime.array));
-        System.out.println("remove root from insertion heap: "+insertMinHeap.remove());
-        System.out.println("Sem example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
+        System.out.println("Remove root from linear: "+linearTime.remove());
+        System.out.println("Seminar example linear-time minHeap " + Arrays.toString(linearTime.array));
+        System.out.println("Remove root from insertion heap: "+insertMinHeap.remove());
+        System.out.println("Seminar example Insertion minHeap   " + Arrays.toString(insertMinHeap.array));
+
+        System.out.println("\n\nComparison for add/remove operations between insertion and \nlinear-time minHeaps, having the same elements\n  ");
+        timer.startTimer();
+        for (int x: arr){
+            linearTime100.insert(x);
+        }
+        timer.stopTimer();
+        System.out.println("Average Linear time adding: "+timer.getTime());
 
         timer.startTimer();
         for (int i = 0; i < 10; i++){
@@ -358,24 +377,18 @@ public class BinaryMinHeap<E> {
         System.out.println("Average Linear time removing "+timer.getTime());
 
         timer.startTimer();
-        for (int i = 0; i < 10; i++){
-            insertMinHeap100.remove();
-        }
-        timer.stopTimer();
-        System.out.println("Average insertion time removing "+timer.getTime());
-
-        timer.startTimer();
-        for (int x: arr){
-            linearTime100.insert(x);
-        }
-        timer.stopTimer();
-        System.out.println("Average Linear time inserting "+timer.getTime());
-
-        timer.startTimer();
         for (int x: arr){
             insertMinHeap100.insert(x);
         }
         timer.stopTimer();
-        System.out.println("Average Insertion time inserting "+timer.getTime());
+        System.out.println("Average Insertion time adding "+timer.getTime());
+
+        timer.startTimer();
+        for (int i = 0; i < 10; i++){
+            insertMinHeap100.remove();
+        }
+        timer.stopTimer();
+        System.out.println("Average insertion time removing "+timer.getTime()+"\n\n");
+        TestMain.main(null);
     }
 }
