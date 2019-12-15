@@ -195,7 +195,7 @@ public class WordPuzzleArrayImpl {
         int count = position;
         int next = position % rows;
         // go up left corner
-        while (next >= 0 && count >= 0) {
+        while (next > 0 && count >= 0) {
             word = word + display[count];
             if (!found.contains(word)) {
                 found.add(word);
