@@ -143,7 +143,7 @@ public class WordPuzzle {
     private void findRow(int position) {
         String word = "";
         int count = position - position % rows;
-        int length = count + rows;
+        int length = count + rows ;
         int next;
         //go from the beginning of the row to position
         while (count <= position) {
@@ -174,7 +174,7 @@ public class WordPuzzle {
             next++;
         }
         word = "";
-        next = length - 1;
+        next--;//length - 1;
         // go from the end of the row back to position
         while (next > position) {
             word = word + display[next];
